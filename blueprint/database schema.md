@@ -41,11 +41,11 @@ Each single item  is an __achievement__ which contains the following fields.
     * Type: Boolean
     * Mandatory: Yes
     * Default: `false`
-12. create-date
+12. createDate
     * Description: The time when this achievement is created, which is automatically populated by the system.
     * Type: Date
     * Mandatory: Yes
-13. update-date
+13. updateDate
     * Description: The last time when this achievement is updated, which is automatically populated by the system.
     * Type: Date
     * Mandatory: Yes
