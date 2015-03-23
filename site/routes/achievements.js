@@ -58,14 +58,73 @@ var achievementSchema = new Schema({
 var Achievement = mongoose.model('Achievement', achievementSchema);
 
 
-/* GET achievement list. */
+/* retrieve achievement list. */
 router.get('/', function(req, res, next) {
     Achievement.find(function(err, achievements) {
-        if (err) return console.error(err);
-        console.log(achievements);
-        res.json(achievements);
-    })
+        if (err) {
+            console.error(err);
+            next(err);
+        } else {
+            //console.log(achievements);
+            res.json(achievements);
+        }
+    });
 
 });
+
+// create a new achievement.
+router.post('/', function(req, res, next) {
+    //console.log(req.body);
+    Achievement.create(req.body, function(err) {
+        if (err) {
+            console.error(err);
+            next(err);
+        } else {
+            res.json('OK');
+        }
+    });
+})
+
+// modify an old achievement.
+//The code is from http://stackoverflow.com/a/7855281/1494097
+router.put('/', function(req, res, next) {
+
+    var achievement = new Achievement(req.body);
+    //console.log(achievement);
+    // Convert the Model instance to a simple object using Model's 'toObject' function
+    // to prevent weirdness like infinite looping...
+    var upsertData = achievement.toObject();
+    //console.log(upsertData);
+    // Delete the _id property, otherwise Mongo will return a "Mod on _id not allowed" error
+    delete upsertData._id;
+
+    // Do the upsert, which works like this: If no Contact document exists with 
+    // _id = contact.id, then create a new doc using upsertData.
+    // Otherwise, update the existing doc with upsertData
+    Achievement.update({
+        _id: achievement.id
+    }, upsertData, {
+        upsert: true
+    }, function(err) {
+        if (err) {
+            console.error(err);
+            next(err);
+        } else {
+            res.json('OK');
+        }
+    });
+})
+
+// remove an old achievement
+router.delete('/', function(req, res, next) {
+    Achievement.remove(req.body, function(err) {
+        if (err) {
+            console.error(err);
+            next(err);
+        } else {
+            res.json('OK');
+        }
+    });
+})
 
 module.exports = router;
