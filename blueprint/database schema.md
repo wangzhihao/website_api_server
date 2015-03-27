@@ -16,14 +16,14 @@ Each single item  is an __achievement__ which contains the following fields.
     * Description: A supposed date before which I should win this achievement.
     * Type: Date
     * Mandatory: No
-5. isSkill
-    * Description: `true` if the achievement is a techique skill, `false` othewise.
-    * Type: boolean
+5. type
+    * Description: The achievement type which can be `course`, `paper`, `book`, `skill` and more.
+    * Type: String
     * Mandatory: Yes
-6. isEvent
-    * Description: `true` if the achievement is a non-techique event such as finishing a book or a course, `false` othewise.
-    * Type: boolean
-    * Mandatory: Yes
+6. level
+    * Description: The bloom's taxonomy congnitive six levels.
+    * Type: String
+    * Mandatory: Yes  
 7. resources
     * Description: links which point to the related useful resourses.
     * Type: Array
